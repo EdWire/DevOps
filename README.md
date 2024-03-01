@@ -16,10 +16,12 @@ az account -s 'subscripion_id'
 
 ``` bash
 
+cd clouddrive
+
 git clone https://github.com/EdWire/DevOps.git
 
 cd DevOps/OEA
 
-
+./setup.sh -o 'vcsprod' -r 'edgraph-rg' -l 'eastus'
 
 ```

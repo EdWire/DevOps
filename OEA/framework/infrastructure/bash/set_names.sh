@@ -23,7 +23,7 @@ if [[ ${#resource_group_name} -gt 64 || ! $resource_group_name =~ ^[a-zA-Z0-9\_-
   exit 1
 fi
 
-export OEA_VERSION="0.8dev"
+export OEA_VERSION="1.0"
 export OEA_RESOURCE_GROUP=${resource_group_name}
 
 export OEA_SYNAPSE="syn-oea-${org_id_lowercase}"
