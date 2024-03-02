@@ -8,7 +8,7 @@
 
 az account show
 
-az account -s 'subscripion_id'
+az account set -s 'subscripion_id'
 
 ```
 
