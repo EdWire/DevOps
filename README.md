@@ -22,7 +22,7 @@ git clone https://github.com/EdWire/DevOps.git
 
 cd DevOps/OEA
 
-./setup.sh -o 'vcsprod' -r 'edgraph-analytics-rg' -l 'eastus'
+./setup.sh -o 'produsc' -r 'eg-oea-rg-production-usc' -l 'eastus'
 
 ```
 
