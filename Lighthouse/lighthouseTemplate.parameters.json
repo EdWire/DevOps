@@ -14,10 +14,10 @@
     "resourceGroups": {
       "value": [
           {
-            "rgName": "edgraph-rg"
+            "rgName": "rg-edgraph-prod"
           },
           {
-            "rgName": "edgraph-analytics-rg"
+            "rgName": "rg-edgraph-analytics-prod"
           }
       ]
     },
