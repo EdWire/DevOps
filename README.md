@@ -22,9 +22,24 @@ git clone https://github.com/EdWire/DevOps.git
 
 cd DevOps/OEA
 
-./setup.sh -o 'produsc' -r 'eg-oea-rg-production-usc' -l 'eastus'
+./setup.sh -o 'produsc' -r 'eg-oea-rg-production-usc' -l 'southcentralus'
 
 ```
+
+### Assign USer/Roles Permissions
+
+- Create Security Group(s) in Microsoft Entra ID
+  - "EdGraph Analytics Contributors"
+  - Add members/users to Security Group
+- Go to the Resource Group - Access Control (IAM)
+  - Add "Contributor" permissions to the Azure AD Security Group
+- Go to the Storage Account - Access Control (IAM)
+  - Add "Storage Blob Data Contributor" permissions to the Azure AD Security Group
+- Go to the Key Vault - Access Policies
+  - Select "Secret Management" template
+  - Add "permissions to the Azure AD Security Group
+- Go to the Synapse Workspace - Manage - Access Control
+  - Add "Storage Blob Data Contributor" permissions to the Azure AD Security Group
 
 ### If the setup script fails
 
