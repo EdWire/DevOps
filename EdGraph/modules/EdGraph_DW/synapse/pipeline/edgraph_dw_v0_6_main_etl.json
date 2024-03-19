@@ -1,0 +1,244 @@
+{
+	"name": "edgraph_dw_v0_6_main_etl",
+	"properties": {
+		"activities": [
+			{
+				"name": "Run_EdGraph_Main",
+				"type": "SynapseNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "edgraph_dw_v0_6_main_etl_pipeline",
+						"type": "NotebookReference"
+					},
+					"parameters": {
+						"workspace": {
+							"value": {
+								"value": "@pipeline().parameters.workspace",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"migrate_s2r_to_s3": {
+							"value": {
+								"value": "@pipeline().parameters.migrate_s2r_to_s3",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"create_s2r_descriptor_views": {
+							"value": {
+								"value": "@pipeline().parameters.create_s2r_descriptor_views\n",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"create_s3_sql_db_views": {
+							"value": {
+								"value": "@pipeline().parameters.create_s3_sql_db_views",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"create_s3_semantic_views": {
+							"value": {
+								"value": "@pipeline().parameters.create_s3_semantic_views",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"stage2_db_name": {
+							"value": {
+								"value": "@pipeline().parameters.stage2_db_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"stage3_db_name": {
+							"value": {
+								"value": "@pipeline().parameters.stage3_db_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"schoolYear": {
+							"value": {
+								"value": "@pipeline().parameters.schoolYear",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"districtId": {
+							"value": {
+								"value": "@pipeline().parameters.districtId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"secret_name": {
+							"value": {
+								"value": "@pipeline().parameters.secret_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"user_name": {
+							"value": {
+								"value": "@pipeline().parameters.user_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"database_name": {
+							"value": {
+								"value": "@pipeline().parameters.database_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"data_source": {
+							"value": {
+								"value": "@pipeline().parameters.data_source",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"server_name": {
+							"value": {
+								"value": "@pipeline().parameters.server_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"driver": {
+							"value": {
+								"value": "@pipeline().parameters.driver",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"semantic_schema_name": {
+							"value": {
+								"value": "@pipeline().parameters.semantic_schema_name",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiVersion": {
+							"value": {
+								"value": "@pipeline().parameters.apiVersion",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"prepare_edgraph_metadata": {
+							"value": {
+								"value": "@pipeline().parameters.prepare_edgraph_metadata",
+								"type": "Expression"
+							},
+							"type": "bool"
+						}
+					},
+					"sparkPool": {
+						"referenceName": "spark3p4sm",
+						"type": "BigDataPoolReference"
+					},
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			}
+		],
+		"parameters": {
+			"workspace": {
+				"type": "string",
+				"defaultValue": "sandbox8"
+			},
+			"migrate_s2r_to_s3": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"create_s3_sql_db_views": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"create_s3_semantic_views": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"create_s2r_descriptor_views": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"stage2_db_name": {
+				"type": "string",
+				"defaultValue": "ldb_sandbox2_s2r_ed_fi"
+			},
+			"stage3_db_name": {
+				"type": "string",
+				"defaultValue": "ldb_sandbox2_s3_ed_fi"
+			},
+			"secret_name": {
+				"type": "string",
+				"defaultValue": "syn-oea-hisddev-ondemand-mssql-admin-credentials-password"
+			},
+			"user_name": {
+				"type": "string",
+				"defaultValue": "eduanalyticsuser"
+			},
+			"database_name": {
+				"type": "string",
+				"defaultValue": "sdb_sandbox2_s3"
+			},
+			"data_source": {
+				"type": "string",
+				"defaultValue": "sandbox2_data_source"
+			},
+			"server_name": {
+				"type": "string",
+				"defaultValue": "syn-oea-hisddev-ondemand.sql.azuresynapse.net"
+			},
+			"driver": {
+				"type": "string",
+				"defaultValue": "ODBC Driver 18 for SQL Server"
+			},
+			"semantic_schema_name": {
+				"type": "string",
+				"defaultValue": "semantic"
+			},
+			"schoolYear": {
+				"type": "string",
+				"defaultValue": "2011"
+			},
+			"districtId": {
+				"type": "string",
+				"defaultValue": "All"
+			},
+			"apiVersion": {
+				"type": "string",
+				"defaultValue": "5.2"
+			},
+			"prepare_edgraph_metadata": {
+				"type": "bool",
+				"defaultValue": false
+			}
+		},
+		"folder": {
+			"name": "EdGraph/modules/EdGraph_DW/v0.6/pipeline/main"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-25T05:07:25Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

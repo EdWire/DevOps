@@ -75,7 +75,7 @@ then
   print_usage
 fi
 
-source $oea_path/framework/infrastructure/bash/set_names.sh $org_id $resource_group_name
+source $oea_path/infrastructure/synapse/set_names.sh $org_id $resource_group_name
 
 subscription_id=$(az account show --query id -o tsv)
 
@@ -105,14 +105,14 @@ echo "--> Setting up OEA (logging detailed setup messages to $logfile)" 1>&3
 # setup the base architecture
 echo "--> Setting up the OEA base architecture."
 echo "--> Setting up the OEA base architecture." 1>&3
-$oea_path/framework/infrastructure/bash/setup_base_architecture.sh $org_id $location $include_groups $subscription_id $oea_path $logfile
+$oea_path/infrastructure/synapse/setup_base_architecture.sh $org_id $location $include_groups $subscription_id $oea_path $logfile
 # exit out if setup_base_architecture failed
 if [[ $? != 0 ]]; then
   exit 1
 fi
 
 # install the OEA framework assets
-$oea_path/framework/setup.sh $OEA_SYNAPSE $OEA_STORAGE_ACCOUNT $OEA_KEYVAULT
+$oea_path/framework/synapse/setup.sh $OEA_SYNAPSE $OEA_STORAGE_ACCOUNT $OEA_KEYVAULT
 
 workspace_url=$(az synapse workspace show --name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP | jq -r '.connectivityEndpoints | .web')
 echo "--> OEA setup is complete. Click on this url to work with your new Synapse workspace (via Synapse Studio): $workspace_url"

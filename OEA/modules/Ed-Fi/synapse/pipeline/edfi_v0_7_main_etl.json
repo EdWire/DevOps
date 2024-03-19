@@ -1,0 +1,288 @@
+{
+	"name": "edfi_v0_7_main_etl",
+	"properties": {
+		"activities": [
+			{
+				"name": "Run_EdFi_Main",
+				"type": "SynapseNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "edfi_v0_7_main_etl_pipeline",
+						"type": "NotebookReference"
+					},
+					"parameters": {
+						"workspace": {
+							"value": {
+								"value": "@pipeline().parameters.workspace",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"batchLimit": {
+							"value": {
+								"value": "@pipeline().parameters.ApiLimit",
+								"type": "Expression"
+							},
+							"type": "int"
+						},
+						"moduleName": {
+							"value": {
+								"value": "@pipeline().parameters.ModuleName",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"schoolYear": {
+							"value": {
+								"value": "@pipeline().parameters.SchoolYear",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"districtId": {
+							"value": {
+								"value": "@pipeline().parameters.DistrictId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiUrl": {
+							"value": {
+								"value": "@pipeline().parameters.ApiUrl",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"highFrequentDelta\t": {
+							"value": {
+								"value": "@pipeline().parameters.highFrequentDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"moderateFrequentDelta": {
+							"value": {
+								"value": "@pipeline().parameters.moderateFrequentDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"lowFrequentDelta": {
+							"value": {
+								"value": "@pipeline().parameters.lowFrequentDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"descriptorsDelta": {
+							"value": {
+								"value": "@pipeline().parameters.descriptorsDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"kvSecret_clientId": {
+							"value": {
+								"value": "@pipeline().parameters.kvSecret_clientId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"kvSecret_clientSecret": {
+							"value": {
+								"value": "@pipeline().parameters.kvSecret_clientSecret",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"instanceId": {
+							"value": {
+								"value": "@pipeline().parameters.InstanceId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiVersion": {
+							"value": {
+								"value": "@pipeline().parameters.apiVersion",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"landingDateTimeFormat": {
+							"value": {
+								"value": "@pipeline().parameters.landingDateTimeFormat",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"fetchHistory": {
+							"value": {
+								"value": "@pipeline().parameters.fetchHistory",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"ingestionHistoryMode": {
+							"value": {
+								"value": "@pipeline().parameters.ingestionHistoryMode",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"etlProcessing": {
+							"value": {
+								"value": "@pipeline().parameters.etlProcessing",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"prepareEdFiMetadata": {
+							"value": {
+								"value": "@pipeline().parameters.prepareEdFiMetadata",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"landData": {
+							"value": {
+								"value": "@pipeline().parameters.landData",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"ingestData": {
+							"value": {
+								"value": "@pipeline().parameters.ingestData",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"refineData": {
+							"value": {
+								"value": "@pipeline().parameters.refineData",
+								"type": "Expression"
+							},
+							"type": "bool"
+						}
+					},
+					"sparkPool": {
+						"referenceName": "spark3p4sm",
+						"type": "BigDataPoolReference"
+					},
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			}
+		],
+		"parameters": {
+			"workspace": {
+				"type": "string",
+				"defaultValue": "sandbox3"
+			},
+			"ApiUrl": {
+				"type": "string",
+				"defaultValue": "https://api.edgraph.dev/edfi/v5.2/saas"
+			},
+			"InstanceId": {
+				"type": "string",
+				"defaultValue": "57a89fc0-f191-4f71-91bc-d4df3d85e786"
+			},
+			"SchoolYear": {
+				"type": "string",
+				"defaultValue": "2011"
+			},
+			"ModuleName": {
+				"type": "string",
+				"defaultValue": "Ed-Fi"
+			},
+			"DistrictId": {
+				"type": "string",
+				"defaultValue": "All"
+			},
+			"ApiLimit": {
+				"type": "string",
+				"defaultValue": "300"
+			},
+			"kvSecret_clientId": {
+				"type": "string",
+				"defaultValue": "7pPokwS8oNnKMoT7"
+			},
+			"kvSecret_clientSecret": {
+				"type": "string",
+				"defaultValue": "q4tJfGVc2W9ak0Wus4EgnULSZjEeJ7ZG"
+			},
+			"highFrequentDelta": {
+				"type": "float",
+				"defaultValue": 1
+			},
+			"moderateFrequentDelta": {
+				"type": "float",
+				"defaultValue": 3
+			},
+			"lowFrequentDelta": {
+				"type": "float",
+				"defaultValue": 7
+			},
+			"descriptorsDelta": {
+				"type": "float",
+				"defaultValue": 180
+			},
+			"apiVersion": {
+				"type": "string",
+				"defaultValue": "5.2"
+			},
+			"landingDateTimeFormat": {
+				"type": "string",
+				"defaultValue": "yyyyMMddHHmmss"
+			},
+			"fetchHistory": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"ingestionHistoryMode": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"etlProcessing": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"prepareEdFiMetadata": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"landData": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"ingestData": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"refineData": {
+				"type": "bool",
+				"defaultValue": true
+			}
+		},
+		"folder": {
+			"name": "OEA/modules/Ed-Fi/v0.7/pipeline/main"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-17T13:19:22Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

@@ -15,14 +15,16 @@ this_file_path=$(dirname $(realpath $0))
 echo "--> Setting up the IPEDS module assets."
 
 # 2) install notebooks
-# sed "s/yourstorageaccount/$storage_account/" $this_file_path/synapse/notebook/OEA_py.ipynb > $this_file_path/tmp/OEA_py1.ipynb
-# sed "s/yourkeyvault/$key_vault/" $this_file_path/tmp/OEA_py1.ipynb > $this_file_path/tmp/OEA_py2.ipynb
-# eval "az synapse notebook import --workspace-name $synapse_workspace --name OEA_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/OEA_py2.ipynb --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name ipeds_v0_1_migrate_s1_s3 --spark-pool-name spark3p4sm --file @$this_file_path/notebook/ipeds_v0_1_migrate_s1_s3.ipynb --folder-path 'OEA/modules/iPEDS/v0.1/src' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name SQL_Essentials --spark-pool-name spark3p4sm --file @$this_file_path/notebook/SQL_Essentials.ipynb --folder-path 'OEA/modules/iPEDS/v0.1/utilities' --only-show-errors"
+sed "s/yourstorageaccount/$storage_account/" $this_file_path/synapse/notebook/OEA_py.ipynb > $this_file_path/tmp/OEA_py1.ipynb
+sed "s/yourkeyvault/$key_vault/" $this_file_path/tmp/OEA_py1.ipynb > $this_file_path/tmp/OEA_py2.ipynb
+eval "az synapse notebook import --workspace-name $synapse_workspace --name OEA_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/OEA_py2.ipynb --only-show-errors"
+
 eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_edfi_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
 eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_oea_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
 eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_fetch_urls --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_fetch_urls.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
+
+eval "az synapse notebook import --workspace-name $synapse_workspace --name ipeds_v0_1_migrate_s1_s3 --spark-pool-name spark3p4sm --file @$this_file_path/notebook/ipeds_v0_1_migrate_s1_s3.ipynb --folder-path 'OEA/modules/IPEDS/v0.1/src' --only-show-errors"
+eval "az synapse notebook import --workspace-name $synapse_workspace --name SQL_Essentials --spark-pool-name spark3p4sm --file @$this_file_path/notebook/SQL_Essentials.ipynb --folder-path 'OEA/modules/IPEDS/v0.1/utilities' --only-show-errors"
 
 # # 3) setup pipelines
 # # Note that the ordering below matters because pipelines that are referred to by other pipelines must be created first.

@@ -1,0 +1,236 @@
+{
+	"name": "edfi_v0_6_main_etl",
+	"properties": {
+		"activities": [
+			{
+				"name": "Run_EdFi_Main",
+				"type": "SynapseNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "edfi_v0_6_main_etl_pipeline",
+						"type": "NotebookReference"
+					},
+					"parameters": {
+						"workspace": {
+							"value": {
+								"value": "@pipeline().parameters.workspace",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"batchLimit": {
+							"value": {
+								"value": "@pipeline().parameters.ApiLimit",
+								"type": "Expression"
+							},
+							"type": "int"
+						},
+						"kvName": {
+							"value": {
+								"value": "@pipeline().parameters.kvName",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"moduleName": {
+							"value": {
+								"value": "@pipeline().parameters.ModuleName",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"minChangeVer": {
+							"value": {
+								"value": "@pipeline().parameters.MinChangeVer",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"maxChangeVer": {
+							"value": {
+								"value": "@pipeline().parameters.MaxChangeVer",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"schoolYear": {
+							"value": {
+								"value": "@pipeline().parameters.SchoolYear",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"districtId": {
+							"value": {
+								"value": "@pipeline().parameters.DistrictId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiUrl": {
+							"value": {
+								"value": "@pipeline().parameters.ApiUrl",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"prepareEdFiMetadata": {
+							"value": {
+								"value": "@pipeline().parameters.prepareEdFiMetaData",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"highFrequentDelta\t": {
+							"value": {
+								"value": "@pipeline().parameters.highFrequentDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"moderateFrequentDelta": {
+							"value": {
+								"value": "@pipeline().parameters.moderateFrequentDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"lowFrequentDelta": {
+							"value": {
+								"value": "@pipeline().parameters.lowFrequentDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"descriptorsDelta": {
+							"value": {
+								"value": "@pipeline().parameters.descriptorsDelta",
+								"type": "Expression"
+							},
+							"type": "float"
+						},
+						"client_id": {
+							"value": {
+								"value": "@pipeline().parameters.client_id",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"client_secret_id": {
+							"value": {
+								"value": "@pipeline().parameters.client_secret_id",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"instanceId": {
+							"value": {
+								"value": "@pipeline().parameters.InstanceId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"metadataUrl": {
+							"value": {
+								"value": "@pipeline().parameters.MetadataUrl",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiVersion": {
+							"value": {
+								"value": "@pipeline().parameters.apiVersion",
+								"type": "Expression"
+							},
+							"type": "string"
+						}
+					},
+					"sparkPool": {
+						"referenceName": "spark3p3med",
+						"type": "BigDataPoolReference"
+					},
+					"conf": {
+						"spark.dynamicAllocation.enabled": null,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			}
+		],
+		"parameters": {
+			"workspace": {
+				"type": "string"
+			},
+			"ApiUrl": {
+				"type": "string"
+			},
+			"InstanceId": {
+				"type": "string"
+			},
+			"SchoolYear": {
+				"type": "string"
+			},
+			"ModuleName": {
+				"type": "string"
+			},
+			"DistrictId": {
+				"type": "string"
+			},
+			"ApiLimit": {
+				"type": "string"
+			},
+			"kvName": {
+				"type": "string"
+			},
+			"MinChangeVer": {
+				"type": "string"
+			},
+			"MaxChangeVer": {
+				"type": "string"
+			},
+			"client_id": {
+				"type": "string"
+			},
+			"client_secret_id": {
+				"type": "string"
+			},
+			"prepareEdFiMetaData": {
+				"type": "bool"
+			},
+			"highFrequentDelta": {
+				"type": "float"
+			},
+			"moderateFrequentDelta": {
+				"type": "float"
+			},
+			"lowFrequentDelta": {
+				"type": "float"
+			},
+			"descriptorsDelta": {
+				"type": "float"
+			},
+			"MetadataUrl": {
+				"type": "string"
+			},
+			"apiVersion": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "OEA/modules/Ed-Fi/v0.6/pipeline/main"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-17T13:19:22Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}
