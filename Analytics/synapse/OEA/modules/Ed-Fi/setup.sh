@@ -14,28 +14,28 @@ this_file_path=$(dirname $(realpath $0))
 
 echo "--> Setting up the Ed-Fi module assets."
 
-# 2) install notebooks
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_ingest --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_ingest.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_land --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_land.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_main_etl_pipeline --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_main_etl_pipeline.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_prepare_metadata --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_prepare_metadata.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_refine --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_refine.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
+# # 2) install notebooks
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_ingest --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_ingest.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_land --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_land.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_main_etl_pipeline --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_main_etl_pipeline.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_prepare_metadata --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_prepare_metadata.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_refine --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_refine.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/main' --only-show-errors"
 
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_edfi_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_oea_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_fetch_urls --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_fetch_urls.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_edfi_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_oea_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_6_fetch_urls --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_6_fetch_urls.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.6/src/utilities' --only-show-errors"
 
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_ingest --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_ingest.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_land --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_land.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_ingest --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_ingest.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_land --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_land.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_main_etl_pipeline --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_main_etl_pipeline.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_prepare_metadata --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_prepare_metadata.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_refine --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_refine.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_ingest --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_ingest.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_land --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_land.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_ingest --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_ingest.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_land --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_land.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_main_etl_pipeline --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_main_etl_pipeline.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_prepare_metadata --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_prepare_metadata.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_refine --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_refine.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/main' --only-show-errors"
 
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_edfi_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/utilities' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_oea_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/utilities' --only-show-errors"
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_fetch_urls --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_fetch_urls.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/utilities' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_edfi_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/utilities' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_oea_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/utilities' --only-show-errors"
+# eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_7_fetch_urls --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_7_fetch_urls.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.7/src/utilities' --only-show-errors"
 
 # # 3) setup pipelines
 # # Note that the ordering below matters because pipelines that are referred to by other pipelines must be created first.
