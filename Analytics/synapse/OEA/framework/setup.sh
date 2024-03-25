@@ -39,8 +39,9 @@ eval "az synapse dataset create --workspace-name $synapse_workspace --name DS_Az
 
 echo "--> Setup complete. The OEA framework assets have been installed in the specified synapse workspace: $synapse_workspace"
 
-# # 2) install notebooks
+# 2) install notebooks
+escaped_time_zone=$(printf '%s\n' "$time_zone" | sed -e 's/[\/&]/\\&/g')
 sed "s/yourstorageaccount/$storage_account/" $this_file_path/notebook/oea_v1_0_oea_py.ipynb > $this_file_path/tmp/oea_v1_0_oea_py1.ipynb
 sed "s/yourkeyvault/$key_vault/" $this_file_path/tmp/oea_v1_0_oea_py1.ipynb > $this_file_path/tmp/oea_v1_0_oea_py2.ipynb
-sed "s/yourtimezone/$time_zone/" $this_file_path/tmp/oea_v1_0_oea_py2.ipynb > $this_file_path/tmp/oea_v1_0_oea_py3.ipynb
+sed "s/yourtimezone/$escaped_time_zone/" $this_file_path/tmp/oea_v1_0_oea_py2.ipynb > $this_file_path/tmp/oea_v1_0_oea_py3.ipynb
 eval "az synapse notebook import --workspace-name $synapse_workspace --name oea_v1_0_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/oea_v1_0_oea_py3.ipynb --only-show-errors"

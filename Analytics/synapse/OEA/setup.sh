@@ -3,7 +3,7 @@
 # Flag definition
 org_id=""
 location="eastus"
-time_zone="	US/Eastern"
+time_zone="US/Eastern"
 include_groups=false
 resource_group_name=""
 
