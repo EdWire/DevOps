@@ -3,6 +3,7 @@
 # Flag definition
 org_id=""
 location="eastus"
+time_zone="	US/Eastern"
 include_groups=false
 resource_group_name=""
 
@@ -13,10 +14,10 @@ print_usage() {
   echo "    setup.sh -o <org_id>"
   echo "where org_id is a suffix representing your organization (eg, CISD3). This value must be 12 characters or less (consider using an abbreviation) and must contain only letters and/or numbers."
   echo ""
-  echo "By default, the Azure resources will be provisioned in the East US location."
+  echo "By default, the Azure resources will be provisioned in the East US location and the time zone used in Notebooks is US/Eastern.  Note that the -l <location> and -t <time_zone> are usually within a similar region/time zone."
   echo "If you want to have the resources provisioned in an alternate location, invoke the script like this: "
-  echo "    setup.sh -o <org_id> -l <location>"
-  echo "where org_id is a suffix for your organization (eg, CISD3), and location is the abbreviation of the desired location (eg, eastus, westus, northeurope)."
+  echo "    setup.sh -o <org_id> -l <location> -t <time_zone>"
+  echo "where org_id is a suffix for your organization (eg, CISD3), location is the abbreviation of the desired location (eg, eastus, westus, northeurope) and time_zone is US/Eastern, US/Central, US/Mountain or US/Pacific."
   echo ""
   echo "By default, the Azure resource group will be provisioned as rg-oea-<org_id>."
   echo "If you want to have the resource group provisioned with an alternate name, invoke the script like this: "
@@ -38,7 +39,7 @@ exec 3>&1 1>>${logfile} 2>&1
 oea_path=$(dirname $(realpath $0))
 
 # Set Flags
-while getopts ":o:l:ir:" flag; do
+while getopts ":o:l:t:ir:" flag; do
   case "${flag}" in
     o) 
       echo "argument -o called with value ${OPTARG}"
@@ -47,6 +48,10 @@ while getopts ":o:l:ir:" flag; do
     l) 
       echo "argument -l called with value ${OPTARG}"
       location=${OPTARG} 
+      ;;
+    t) 
+      echo "argument -t called with value ${OPTARG}"
+      time_zone=${OPTARG} 
       ;;
     i) 
       echo "flag -i is enabled"
@@ -75,7 +80,7 @@ then
   print_usage
 fi
 
-source $oea_path/infrastructure/synapse/set_names.sh $org_id $resource_group_name
+source $oea_path/infrastructure/set_names.sh $org_id $resource_group_name
 
 subscription_id=$(az account show --query id -o tsv)
 
@@ -105,14 +110,14 @@ echo "--> Setting up OEA (logging detailed setup messages to $logfile)" 1>&3
 # setup the base architecture
 echo "--> Setting up the OEA base architecture."
 echo "--> Setting up the OEA base architecture." 1>&3
-$oea_path/infrastructure/synapse/setup_base_architecture.sh $org_id $location $include_groups $subscription_id $oea_path $logfile
+$oea_path/infrastructure/setup_base_architecture.sh $org_id $location $include_groups $subscription_id $oea_path $logfile
 # exit out if setup_base_architecture failed
 if [[ $? != 0 ]]; then
   exit 1
 fi
 
 # install the OEA framework assets
-$oea_path/framework/synapse/setup.sh $OEA_SYNAPSE $OEA_STORAGE_ACCOUNT $OEA_KEYVAULT
+$oea_path/framework/setup.sh $OEA_SYNAPSE $OEA_STORAGE_ACCOUNT $OEA_KEYVAULT $time_zone
 
 workspace_url=$(az synapse workspace show --name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP | jq -r '.connectivityEndpoints | .web')
 echo "--> OEA setup is complete. Click on this url to work with your new Synapse workspace (via Synapse Studio): $workspace_url"
