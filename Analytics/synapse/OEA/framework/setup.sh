@@ -44,4 +44,4 @@ escaped_time_zone=$(printf '%s\n' "$time_zone" | sed -e 's/[\/&]/\\&/g')
 sed "s/yourstorageaccount/$storage_account/" $this_file_path/notebook/oea_v1_0_oea_py.ipynb > $this_file_path/tmp/oea_v1_0_oea_py1.ipynb
 sed "s/yourkeyvault/$key_vault/" $this_file_path/tmp/oea_v1_0_oea_py1.ipynb > $this_file_path/tmp/oea_v1_0_oea_py2.ipynb
 sed "s/yourtimezone/$escaped_time_zone/" $this_file_path/tmp/oea_v1_0_oea_py2.ipynb > $this_file_path/tmp/oea_v1_0_oea_py3.ipynb
-eval "az synapse notebook import --workspace-name $synapse_workspace --name oea_v1_0_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/oea_v1_0_oea_py3.ipynb --only-show-errors"
+eval "az synapse notebook import --workspace-name $synapse_workspace --name oea_v1_0_oea_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/oea_v1_0_oea_py3.ipynb --folder-path 'OEA/framework/v1.0/src' --only-show-errors"
