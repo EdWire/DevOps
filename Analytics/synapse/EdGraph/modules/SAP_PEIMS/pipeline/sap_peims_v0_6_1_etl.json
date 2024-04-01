@@ -1,0 +1,275 @@
+{
+	"name": "sap_peims_v0_6_1_etl",
+	"properties": {
+		"activities": [
+			{
+				"name": "Run_v0_6_sap_etl_pipeline",
+				"type": "SynapseNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebook": {
+						"referenceName": "sap_peims_v0_6_main_etl_pipeline",
+						"type": "NotebookReference"
+					},
+					"parameters": {
+						"workspace": {
+							"value": {
+								"value": "@pipeline().parameters.workspace",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"batchLimit": {
+							"value": {
+								"value": "@pipeline().parameters.ApiLimit",
+								"type": "Expression"
+							},
+							"type": "int"
+						},
+						"kvName": {
+							"value": {
+								"value": "@pipeline().parameters.kvName",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"moduleName": {
+							"value": {
+								"value": "@pipeline().parameters.ModuleName",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"minChangeVer": {
+							"value": {
+								"value": "@pipeline().parameters.MinChangeVer",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"maxChangeVer": {
+							"value": {
+								"value": "@pipeline().parameters.MaxChangeVer",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"schoolYear": {
+							"value": {
+								"value": "@pipeline().parameters.SchoolYear",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"districtId": {
+							"value": {
+								"value": "@pipeline().parameters.DistrictId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"instanceId": {
+							"value": {
+								"value": "@pipeline().parameters.InstanceId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiUrl": {
+							"value": {
+								"value": "@pipeline().parameters.ApiUrl",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"apiVersion": {
+							"value": {
+								"value": "@pipeline().parameters.ApiVersion",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"sapVersion": {
+							"value": {
+								"value": "@pipeline().parameters.SapVersion",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"prepareSAPMetadata": {
+							"value": {
+								"value": "@pipeline().parameters.PrepareSAPMetadata",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"submissions": {
+							"value": {
+								"value": "@pipeline().parameters.Submissions",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"sap_pipeline": {
+							"value": {
+								"value": "@pipeline().parameters.sap_pipeline",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"etlProcessing": {
+							"value": {
+								"value": "@pipeline().parameters.etlProcessing",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"sap_pipelineType": {
+							"value": {
+								"value": "@pipeline().parameters.sap_pipelineType",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"kvSecret_clientId": {
+							"value": {
+								"value": "@pipeline().parameters.kvSecret_clientId",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"kvSecret_clientSecret": {
+							"value": {
+								"value": "@pipeline().parameters.kvSecret_clientSecret",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"ingestionHistoryMode": {
+							"value": {
+								"value": "@pipeline().parameters.ingestionHistoryMode",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"landingDateTimeFormat": {
+							"value": {
+								"value": "@pipeline().parameters.landingDateTimeFormat",
+								"type": "Expression"
+							},
+							"type": "string"
+						},
+						"validation": {
+							"value": {
+								"value": "@pipeline().parameters.validation",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"deletePrevSubmissions": {
+							"value": {
+								"value": "@pipeline().parameters.deletePrevSubmissions",
+								"type": "Expression"
+							},
+							"type": "bool"
+						}
+					},
+					"sparkPool": {
+						"referenceName": "spark3p4sm",
+						"type": "BigDataPoolReference"
+					},
+					"conf": {
+						"spark.dynamicAllocation.enabled": false,
+						"spark.dynamicAllocation.minExecutors": null,
+						"spark.dynamicAllocation.maxExecutors": null
+					},
+					"numExecutors": null
+				}
+			}
+		],
+		"parameters": {
+			"workspace": {
+				"type": "string"
+			},
+			"ApiUrl": {
+				"type": "string"
+			},
+			"InstanceId": {
+				"type": "string"
+			},
+			"SchoolYear": {
+				"type": "string"
+			},
+			"ModuleName": {
+				"type": "string"
+			},
+			"DistrictId": {
+				"type": "string"
+			},
+			"ApiLimit": {
+				"type": "string"
+			},
+			"kvName": {
+				"type": "string"
+			},
+			"MinChangeVer": {
+				"type": "string"
+			},
+			"MaxChangeVer": {
+				"type": "string"
+			},
+			"PrepareSAPMetadata": {
+				"type": "bool"
+			},
+			"Submissions": {
+				"type": "bool"
+			},
+			"sap_pipeline": {
+				"type": "string"
+			},
+			"SapVersion": {
+				"type": "string"
+			},
+			"etlProcessing": {
+				"type": "bool"
+			},
+			"ApiVersion": {
+				"type": "string"
+			},
+			"sap_pipelineType": {
+				"type": "string"
+			},
+			"kvSecret_clientId": {
+				"type": "string"
+			},
+			"kvSecret_clientSecret": {
+				"type": "string"
+			},
+			"ingestionHistoryMode": {
+				"type": "bool"
+			},
+			"landingDateTimeFormat": {
+				"type": "string"
+			},
+			"validation": {
+				"type": "bool"
+			},
+			"deletePrevSubmissions": {
+				"type": "bool"
+			}
+		},
+		"folder": {
+			"name": "EdGraph/modules/SAP_PEIMS/v0.6/pipeline/main"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-03-06T05:16:42Z"
+	}
+}

@@ -173,18 +173,34 @@
 								"type": "Expression"
 							},
 							"type": "bool"
+						},
+						"kvSecret_devMode": {
+							"value": {
+								"value": "@pipeline().parameters.kvSecret_devMode",
+								"type": "Expression"
+							},
+							"type": "bool"
+						},
+						"pipelineExecutionId": {
+							"value": {
+								"value": "@coalesce(pipeline()?.TriggeredByPipelineRunId, pipeline().RunId)",
+								"type": "Expression"
+							},
+							"type": "string"
 						}
 					},
 					"sparkPool": {
 						"referenceName": "spark3p4sm",
 						"type": "BigDataPoolReference"
 					},
+					"executorSize": "Small",
 					"conf": {
-						"spark.dynamicAllocation.enabled": null,
-						"spark.dynamicAllocation.minExecutors": null,
-						"spark.dynamicAllocation.maxExecutors": null
+						"spark.dynamicAllocation.enabled": false,
+						"spark.dynamicAllocation.minExecutors": 2,
+						"spark.dynamicAllocation.maxExecutors": 2
 					},
-					"numExecutors": null
+					"driverSize": "Small",
+					"numExecutors": 2
 				}
 			}
 		],
@@ -276,6 +292,10 @@
 			"refineData": {
 				"type": "bool",
 				"defaultValue": true
+			},
+			"kvSecret_devMode": {
+				"type": "bool",
+				"defaultValue": false
 			}
 		},
 		"folder": {

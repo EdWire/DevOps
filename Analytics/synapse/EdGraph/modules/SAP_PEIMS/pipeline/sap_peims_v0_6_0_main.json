@@ -1,0 +1,214 @@
+{
+	"name": "sap_peims_v0_6_0_main",
+	"properties": {
+		"activities": [
+			{
+				"name": "SAP_v0_6_1_etl",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "sap_peims_v0_6_1_etl",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"workspace": {
+							"value": "@pipeline().parameters.workspace",
+							"type": "Expression"
+						},
+						"ApiUrl": {
+							"value": "@pipeline().parameters.ApiUrl",
+							"type": "Expression"
+						},
+						"InstanceId": {
+							"value": "@pipeline().parameters.InstanceId",
+							"type": "Expression"
+						},
+						"SchoolYear": {
+							"value": "@pipeline().parameters.SchoolYear",
+							"type": "Expression"
+						},
+						"ModuleName": {
+							"value": "@pipeline().parameters.ModuleName",
+							"type": "Expression"
+						},
+						"DistrictId": {
+							"value": "@pipeline().parameters.DistrictId",
+							"type": "Expression"
+						},
+						"ApiLimit": {
+							"value": "@pipeline().parameters.ApiLimit",
+							"type": "Expression"
+						},
+						"kvName": {
+							"value": "@pipeline().parameters.kvName",
+							"type": "Expression"
+						},
+						"MinChangeVer": {
+							"value": "@pipeline().parameters.MinChangeVer",
+							"type": "Expression"
+						},
+						"MaxChangeVer": {
+							"value": "@pipeline().parameters.MaxChangeVer",
+							"type": "Expression"
+						},
+						"PrepareSAPMetadata": {
+							"value": "@pipeline().parameters.PrepareSAPMetadata",
+							"type": "Expression"
+						},
+						"Submissions": {
+							"value": "@pipeline().parameters.Submissions",
+							"type": "Expression"
+						},
+						"sap_pipeline": {
+							"value": "@pipeline().parameters.sap_pipeline",
+							"type": "Expression"
+						},
+						"SapVersion": {
+							"value": "@pipeline().parameters.SapVersion",
+							"type": "Expression"
+						},
+						"etlProcessing": {
+							"value": "@pipeline().parameters.etlProcessing",
+							"type": "Expression"
+						},
+						"ApiVersion": {
+							"value": "@pipeline().parameters.ApiVersion",
+							"type": "Expression"
+						},
+						"sap_pipelineType": {
+							"value": "@pipeline().parameters.sap_pipelineType",
+							"type": "Expression"
+						},
+						"kvSecret_clientId": {
+							"value": "@pipeline().parameters.kvSecret_clientId",
+							"type": "Expression"
+						},
+						"kvSecret_clientSecret": {
+							"value": "@pipeline().parameters.kvSecret_clientSecret",
+							"type": "Expression"
+						},
+						"ingestionHistoryMode": {
+							"value": "@pipeline().parameters.ingestionHistoryMode",
+							"type": "Expression"
+						},
+						"landingDateTimeFormat": {
+							"value": "@pipeline().parameters.landingDateTimeFormat",
+							"type": "Expression"
+						},
+						"validation": {
+							"value": "@pipeline().parameters.validation",
+							"type": "Expression"
+						},
+						"deletePrevSubmissions": {
+							"value": "@pipeline().parameters.deletePrevSubmissions",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"MetadataUrl": {
+				"type": "string",
+				"defaultValue": "DEPRECATED"
+			},
+			"kvName": {
+				"type": "string"
+			},
+			"workspace": {
+				"type": "string",
+				"defaultValue": "prod"
+			},
+			"ApiUrl": {
+				"type": "string",
+				"defaultValue": "https://odsprod.tea.texas.gov/odsedfiapi2024"
+			},
+			"InstanceId": {
+				"type": "string",
+				"defaultValue": "odsedfiapi2024"
+			},
+			"SchoolYear": {
+				"type": "string",
+				"defaultValue": "2024"
+			},
+			"ModuleName": {
+				"type": "string",
+				"defaultValue": "Ed-Fi"
+			},
+			"ApiLimit": {
+				"type": "string",
+				"defaultValue": "200"
+			},
+			"DistrictId": {
+				"type": "string",
+				"defaultValue": "101912"
+			},
+			"MinChangeVer": {
+				"type": "string"
+			},
+			"MaxChangeVer": {
+				"type": "string"
+			},
+			"PrepareSAPMetadata": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"Submissions": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"sap_pipeline": {
+				"type": "string",
+				"defaultValue": "TEA"
+			},
+			"SapVersion": {
+				"type": "string",
+				"defaultValue": "1.0"
+			},
+			"etlProcessing": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"ApiVersion": {
+				"type": "string",
+				"defaultValue": "6.1"
+			},
+			"sap_pipelineType": {
+				"type": "string",
+				"defaultValue": "PEIMS_MIDYR"
+			},
+			"kvSecret_clientId": {
+				"type": "string",
+				"defaultValue": "oea-edfi-api-client-id"
+			},
+			"kvSecret_clientSecret": {
+				"type": "string",
+				"defaultValue": "oea-edfi-api-client-secret"
+			},
+			"ingestionHistoryMode": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"landingDateTimeFormat": {
+				"type": "string",
+				"defaultValue": "yyyyMMddHHmmss"
+			},
+			"validation": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"deletePrevSubmissions": {
+				"type": "bool",
+				"defaultValue": false
+			}
+		},
+		"folder": {
+			"name": "EdGraph/modules/SAP_PEIMS/v0.6/pipeline/main"
+		},
+		"annotations": [],
+		"lastPublishTime": "2024-03-13T08:01:22Z"
+	}
+}

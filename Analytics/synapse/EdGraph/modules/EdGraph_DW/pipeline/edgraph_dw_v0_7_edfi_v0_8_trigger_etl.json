@@ -1,0 +1,313 @@
+{
+	"name": "edgraph_dw_v0_7_edfi_v0_8_trigger_etl",
+	"properties": {
+		"activities": [
+			{
+				"name": "Run_Ed-Fi_v0_8_Pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "edfi_v0_8_main_etl",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"workspace": {
+							"value": "@pipeline().parameters.workspace",
+							"type": "Expression"
+						},
+						"ApiUrl": {
+							"value": "@pipeline().parameters.ApiUrl",
+							"type": "Expression"
+						},
+						"InstanceId": {
+							"value": "@pipeline().parameters.InstanceId",
+							"type": "Expression"
+						},
+						"SchoolYear": {
+							"value": "@pipeline().parameters.SchoolYear",
+							"type": "Expression"
+						},
+						"ModuleName": {
+							"value": "@pipeline().parameters.ModuleName",
+							"type": "Expression"
+						},
+						"DistrictId": {
+							"value": "@pipeline().parameters.DistrictId",
+							"type": "Expression"
+						},
+						"ApiLimit": {
+							"value": "@pipeline().parameters.ApiLimit",
+							"type": "Expression"
+						},
+						"kvSecret_clientId": {
+							"value": "@pipeline().parameters.edfi_kvSecret_clientId",
+							"type": "Expression"
+						},
+						"kvSecret_clientSecret": {
+							"value": "@pipeline().parameters.edfi_kvSecret_clientSecret",
+							"type": "Expression"
+						},
+						"highFrequentDelta": {
+							"value": "@pipeline().parameters.edfi_highFrequentDelta",
+							"type": "Expression"
+						},
+						"moderateFrequentDelta": {
+							"value": "@pipeline().parameters.edfi_moderateFrequentDelta",
+							"type": "Expression"
+						},
+						"lowFrequentDelta": {
+							"value": "@pipeline().parameters.edfi_lowFrequentDelta",
+							"type": "Expression"
+						},
+						"descriptorsDelta": {
+							"value": "@pipeline().parameters.edfi_descriptorsDelta",
+							"type": "Expression"
+						},
+						"apiVersion": {
+							"value": "@pipeline().parameters.apiVersion",
+							"type": "Expression"
+						},
+						"landingDateTimeFormat": {
+							"value": "@pipeline().parameters.landingDateTimeFormat",
+							"type": "Expression"
+						},
+						"fetchHistory": {
+							"value": "@pipeline().parameters.fetchHistory",
+							"type": "Expression"
+						},
+						"ingestionHistoryMode": {
+							"value": "@pipeline().parameters.ingestionHistoryMode",
+							"type": "Expression"
+						},
+						"etlProcessing": {
+							"value": "@pipeline().parameters.etlProcessing",
+							"type": "Expression"
+						},
+						"prepareEdFiMetadata": {
+							"value": "@pipeline().parameters.prepareEdFiMetadata",
+							"type": "Expression"
+						},
+						"landData": {
+							"value": "@pipeline().parameters.landData",
+							"type": "Expression"
+						},
+						"ingestData": {
+							"value": "@pipeline().parameters.ingestData",
+							"type": "Expression"
+						},
+						"refineData": {
+							"value": "@pipeline().parameters.refineData",
+							"type": "Expression"
+						},
+						"kvSecret_devMode": {
+							"value": "@pipeline().parameters.kvSecret_devMode",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			{
+				"name": "Run_EdGraph_DW_v0_7_pipeline",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Run_Ed-Fi_v0_8_Pipeline",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "edgraph_dw_v0_7_main_etl",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true,
+					"parameters": {
+						"workspace": {
+							"value": "@pipeline().parameters.workspace",
+							"type": "Expression"
+						},
+						"migrate_s2r_to_s3": {
+							"value": "@pipeline().parameters.migrate_s2r_to_s3",
+							"type": "Expression"
+						},
+						"create_s3_sql_db_views": {
+							"value": "@pipeline().parameters.create_s3_sql_db_views",
+							"type": "Expression"
+						},
+						"create_s3_semantic_views": {
+							"value": "@pipeline().parameters.create_s3_semantic_views",
+							"type": "Expression"
+						},
+						"create_s2r_descriptor_views": {
+							"value": "@pipeline().parameters.create_s2r_descriptor_views",
+							"type": "Expression"
+						},
+						"secret_name": {
+							"value": "@pipeline().parameters.edgraph_dw_secret_name",
+							"type": "Expression"
+						},
+						"user_name": {
+							"value": "@pipeline().parameters.edgraph_dw_user_name",
+							"type": "Expression"
+						},
+						"server_name": {
+							"value": "@pipeline().parameters.edgraph_dw_server_name",
+							"type": "Expression"
+						},
+						"schoolYear": {
+							"value": "@pipeline().parameters.SchoolYear",
+							"type": "Expression"
+						},
+						"districtId": {
+							"value": "@pipeline().parameters.DistrictId",
+							"type": "Expression"
+						},
+						"apiVersion": {
+							"value": "@pipeline().parameters.apiVersion",
+							"type": "Expression"
+						},
+						"prepare_edgraph_metadata": {
+							"value": "@pipeline().parameters.prepare_edgraph_metadata",
+							"type": "Expression"
+						}
+					}
+				}
+			}
+		],
+		"parameters": {
+			"workspace": {
+				"type": "string",
+				"defaultValue": "sandbox3"
+			},
+			"ApiUrl": {
+				"type": "string",
+				"defaultValue": "https://api.edgraph.dev/edfi/v5.2/saas"
+			},
+			"InstanceId": {
+				"type": "string",
+				"defaultValue": "57a89fc0-f191-4f71-91bc-d4df3d85e786"
+			},
+			"SchoolYear": {
+				"type": "string",
+				"defaultValue": "2011"
+			},
+			"ModuleName": {
+				"type": "string",
+				"defaultValue": "Ed-Fi"
+			},
+			"DistrictId": {
+				"type": "string",
+				"defaultValue": "All"
+			},
+			"ApiLimit": {
+				"type": "string",
+				"defaultValue": "300"
+			},
+			"edfi_kvSecret_clientId": {
+				"type": "string",
+				"defaultValue": "7pPokwS8oNnKMoT7"
+			},
+			"edfi_kvSecret_clientSecret": {
+				"type": "string",
+				"defaultValue": "q4tJfGVc2W9ak0Wus4EgnULSZjEeJ7ZG"
+			},
+			"edfi_highFrequentDelta": {
+				"type": "float",
+				"defaultValue": 1
+			},
+			"edfi_moderateFrequentDelta": {
+				"type": "float",
+				"defaultValue": 3
+			},
+			"edfi_lowFrequentDelta": {
+				"type": "float",
+				"defaultValue": 7
+			},
+			"edfi_descriptorsDelta": {
+				"type": "float",
+				"defaultValue": 180
+			},
+			"apiVersion": {
+				"type": "string",
+				"defaultValue": "5.2"
+			},
+			"landingDateTimeFormat": {
+				"type": "string",
+				"defaultValue": "yyyyMMddHHmmss"
+			},
+			"fetchHistory": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"ingestionHistoryMode": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"etlProcessing": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"prepareEdFiMetadata": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"landData": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"ingestData": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"refineData": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"kvSecret_devMode": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"prepare_edgraph_metadata": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"migrate_s2r_to_s3": {
+				"type": "bool",
+				"defaultValue": true
+			},
+			"create_s3_sql_db_views": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"create_s3_semantic_views": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"create_s2r_descriptor_views": {
+				"type": "bool",
+				"defaultValue": false
+			},
+			"edgraph_dw_secret_name": {
+				"type": "string"
+			},
+			"edgraph_dw_user_name": {
+				"type": "string"
+			},
+			"edgraph_dw_server_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "EdGraph/modules/EdGraph_DW/v0.7/pipeline/edfi_trigger"
+		},
+		"annotations": [],
+		"lastPublishTime": "2023-07-17T13:19:22Z"
+	},
+	"type": "Microsoft.Synapse/workspaces/pipelines"
+}

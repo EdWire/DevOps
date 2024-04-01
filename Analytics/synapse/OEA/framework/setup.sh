@@ -15,7 +15,7 @@ storage_account=$2
 key_vault=$3
 time_zone=$4
 this_file_path=$(dirname $(realpath $0))
-mkdir $this_file_path/tmp
+mkdir -p $this_file_path/tmp
 
 echo "--> Setting up the OEA framework assets."
 
