@@ -28,9 +28,13 @@ cd DevOps/OEA
 
 ### Assign USer/Roles Permissions
 
-- Create Security Group(s) in Microsoft Entra ID
-  - "EdGraph Analytics Contributors"
-  - Add members/users to Security Group
+- If deploying to a customer's Azure Tenant/Subscription
+  - Create Security Group(s) in Microsoft Entra ID
+    - "EdGraph Analytics Contributors"
+    - Add members/users to Security Group
+- If deploying to EdGraph's Azure Tenant/Subscription
+  - If Development Subscription, use Security Group named "BI Developers (Dev)"
+  - If Production Subscription, use Security Group named "BI Developers (Prod)"
 - Go to the Resource Group - Access Control (IAM)
   - Add "Contributor" permissions to the Azure AD Security Group
 - Go to the Storage Account - Access Control (IAM)
@@ -39,7 +43,7 @@ cd DevOps/OEA
   - Select "Secret Management" template
   - Add "permissions to the Azure AD Security Group
 - Go to the Synapse Workspace - Manage - Access Control
-  - Add "Storage Blob Data Contributor" permissions to the Azure AD Security Group
+  - Add "Synapse Administrator" permissions to the Azure AD Security Group
 
 ### If the setup script fails
 
