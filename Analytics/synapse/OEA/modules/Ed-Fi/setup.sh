@@ -48,10 +48,10 @@ eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi
 
 eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_8_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_8_edfi_py.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.8/src/utilities' --only-show-errors"
 
-sed "s/yourstorageaccount/$storage_account/" $this_file_path/notebook/edfi_v0_8_edfi_py.ipynb > $this_file_path/tmp/edfi_v0_8_edfi_py1.ipynb
-sed "s/yourkeyvault/$key_vault/" $this_file_path/tmp/edfi_v0_8_edfi_py1.ipynb > $this_file_path/tmp/edfi_v0_8_edfi_py2.ipynb
-sed "s/yourtimezone/$escaped_time_zone/" $this_file_path/tmp/edfi_v0_8_edfi_py2.ipynb > $this_file_path/tmp/edfi_v0_8_edfi_py3.ipynb
-eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_8_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/edfi_v0_8_edfi_py3.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.8/src/utilities' --only-show-errors"
+#sed "s/yourstorageaccount/$storage_account/" $this_file_path/notebook/edfi_v0_8_edfi_py.ipynb > $this_file_path/tmp/edfi_v0_8_edfi_py1.ipynb
+#sed "s/yourkeyvault/$key_vault/" $this_file_path/tmp/edfi_v0_8_edfi_py1.ipynb > $this_file_path/tmp/edfi_v0_8_edfi_py2.ipynb
+#sed "s/yourtimezone/$escaped_time_zone/" $this_file_path/tmp/edfi_v0_8_edfi_py2.ipynb > $this_file_path/tmp/edfi_v0_8_edfi_py3.ipynb
+#eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_8_edfi_py --spark-pool-name spark3p4sm --file @$this_file_path/tmp/edfi_v0_8_edfi_py3.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.8/src/utilities' --only-show-errors"
 
 eval "az synapse notebook import --workspace-name $synapse_workspace --name edfi_v0_8_fetch_urls --spark-pool-name spark3p4sm --file @$this_file_path/notebook/edfi_v0_8_fetch_urls.ipynb --folder-path 'OEA/modules/Ed-Fi/v0.8/src/utilities' --only-show-errors"
 
