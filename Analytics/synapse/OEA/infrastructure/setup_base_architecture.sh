@@ -15,6 +15,7 @@ subscription_id=$4
 oea_path=$5
 logfile=$6
 storage_account_id="/subscriptions/$subscription_id/resourceGroups/$OEA_RESOURCE_GROUP/providers/Microsoft.Storage/storageAccounts/$OEA_STORAGE_ACCOUNT"
+key_vault_id="/subscriptions/$subscription_id/resourceGroups/$OEA_RESOURCE_GROUP/providers/Microsoft.KeyVault/vaults/$OEA_KEYVAULT" # [NEW][2024-06-19]
 user_object_id=$(az ad signed-in-user show --query id -o tsv)
 
 # 0) Ensure that the resource providers are registered in the subscription (more info about this here: https://docs.microsoft.com/en-us/azure/azure-resource-manager/templates/error-register-resource-provider )
@@ -87,15 +88,15 @@ echo "--> Creating firewall rule for accessing Synapse Workspace."
 az synapse workspace firewall-rule create --name allowAll --workspace-name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP \
   --start-ip-address 0.0.0.0 --end-ip-address 255.255.255.255
 
-echo "--> Creating spark pool with spark version 3.4"
+echo "--> Creating spark pool with spark version 3.3"
 # note that we can't use the '--no-wait' option on this because when we later create notebooks that refer to this spark pool, we'll need the spark to already exist.
-az synapse spark pool create --name spark3p4sm --workspace-name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP \
-  --spark-version 3.4 --node-count 3 --node-size Small --min-node-count 3 --max-node-count 5 \
+az synapse spark pool create --name spark3p3sm --workspace-name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP \
+  --spark-version 3.3 --node-count 3 --node-size Small --min-node-count 3 --max-node-count 5 \
   --enable-auto-scale true --delay 15 --enable-auto-pause true --tags oea_version=$OEA_VERSION $OEA_ADDITIONAL_TAGS
 [[ $? != 0 ]] && { echo "Provisioning of azure resource failed. See $logfile for more details." 1>&3; exit 1; }
 
-az synapse spark pool create --name spark3p4med --workspace-name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP \
-  --spark-version 3.4 --node-count 3 --node-size Medium --min-node-count 3 --max-node-count 10 \
+az synapse spark pool create --name spark3p3med --workspace-name $OEA_SYNAPSE --resource-group $OEA_RESOURCE_GROUP \
+  --spark-version 3.3 --node-count 3 --node-size Medium --min-node-count 3 --max-node-count 10 \
   --enable-auto-scale true --delay 15 --enable-auto-pause true --tags oea_version=$OEA_VERSION $OEA_ADDITIONAL_TAGS
 [[ $? != 0 ]] && { echo "Provisioning of azure resource failed. See $logfile for more details." 1>&3; exit 1; }
 
@@ -105,7 +106,11 @@ echo "--> 4) Creating key vault: ${OEA_KEYVAULT}" 1>&3
 az keyvault create --name $OEA_KEYVAULT --resource-group $OEA_RESOURCE_GROUP --location $location --tags oea_version=$OEA_VERSION $OEA_ADDITIONAL_TAGS
 [[ $? != 0 ]] && { echo "Provisioning of azure resource failed. See $logfile for more details." 1>&3; exit 1; }
 # give the Synapse workspace access to list and get secrets from the key vault, for use in Synapse pipelines
-az keyvault set-policy -n $OEA_KEYVAULT --secret-permissions get list --object-id $synapse_principal_id
+# az keyvault set-policy -n $OEA_KEYVAULT --secret-permissions get list --object-id $synapse_principal_id # [LEGACY]
+az role assignment create --role "Key Vault Reader" --assignee $synapse_principal_id --scope $key_vault_id # [NEW][2024-06-19]
+az role assignment create --role "Key Vault Secrets User" --assignee $synapse_principal_id --scope $key_vault_id # [NEW][2024-06-19]
+
+
 [[ $? != 0 ]] && { echo "Provisioning of azure resource failed. See $logfile for more details." 1>&3; exit 1; }
 
 # setup key values for use by OEA
@@ -121,7 +126,6 @@ if [ "$include_groups" == "true" ]; then
   echo "--> 5) Creating security groups in Azure Active Directory." 1>&3
   az ad group create --display-name 'Edu Analytics Global Admins' --mail-nickname 'EduAnalyticsGlobalAdmins'
   az ad group owner add --group 'Edu Analytics Global Admins' --owner-object-id $user_object_id
-
   global_admins=$(az ad group show --group "Edu Analytics Global Admins" --query objectId --output tsv)
 
   az ad group create --display-name 'Edu Analytics Data Scientists' --mail-nickname 'EduAnalyticsDataScientists'
@@ -135,9 +139,14 @@ if [ "$include_groups" == "true" ]; then
   az ad group create --display-name 'Edu Analytics External Data Scientists' --mail-nickname 'EduAnalyticsExternalDataScientists'
   az ad group owner add --group 'Edu Analytics External Data Scientists' --owner-object-id $user_object_id
   external_data_scientists=$(az ad group show --group "Edu Analytics External Data Scientists" --query objectId --output tsv)
+  
+  # az ad group create --display-name 'EdGraph Analytics Support Team' --mail-nickname 'EdGraphAnalyticsSupportTeam' # [NEW][PENDING APPROVAL][2024-06-19]
+  # az ad group owner add --group 'EdGraph Analytics Support Team' --owner-object-id $user_object_id # [NEW][PENDING APPROVAL][2024-06-19]
+  # support_team =$(az ad group show --group "EdGraph Analytics Support Team" --query objectId --output tsv) # [NEW][PENDING APPROVAL][2024-06-19]
 
   echo "--> Creating role assignments for Edu Analytics Global Admins, Edu Analytics Data Scientists, and Edu Analytics Data Engineers."
   az role assignment create --role "Owner" --assignee $global_admins --resource-group $OEA_RESOURCE_GROUP
+  # az role assignment create --role "Owner" --assignee $support_team --resource-group $OEA_RESOURCE_GROUP # [NEW][PENDING APPROVAL][2024-06-19]
   # Assign "Storage Blob Data Contributor" to security groups to allow users to query data via Synapse studio
   az role assignment create --role "Storage Blob Data Contributor" --assignee $global_admins --scope $storage_account_id
   az role assignment create --role "Storage Blob Data Contributor" --assignee $data_scientists --scope $storage_account_id
@@ -154,7 +163,6 @@ if [ "$include_groups" == "true" ]; then
   az role assignment create --role "Storage Blob Data Contributor" --assignee $external_data_scientists --scope $synapse_container_id
   # Assign "Reader" access to the storage account so they can see the storage containers when browsing in synapse (this doesn't give access to the data in the containers)
   az role assignment create --role "Reader" --assignee $external_data_scientists --scope $storage_account_id
-
 else
   # If security groups are not created, this user will need to have this role assignment to be able to query data from the storage account
   az role assignment create --role "Storage Blob Data Contributor" --assignee $user_object_id --scope $storage_account_id
