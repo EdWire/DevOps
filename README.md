@@ -15,35 +15,88 @@ az account set -s 'subscripion_id'
 ### Run OEA Framework
 
 ``` bash
-
+# If using Azure Storage 
 cd clouddrive
 
 git clone https://github.com/EdWire/DevOps.git
 
-cd DevOps/OEA
+cd DevOps/Analytics/synapse/OEA
 
-./setup.sh -o 'produsc' -r 'eg-oea-rg-production-usc' -l 'southcentralus'
+./setup.sh -o 'kedcprod' -r 'eg-oea-rg-prod-eus' -l 'eastus'
 
 ```
 
-### Assign USer/Roles Permissions
+### Assign User/Roles Permissions
 
-- If deploying to a customer's Azure Tenant/Subscription
-  - Create Security Group(s) in Microsoft Entra ID
-    - "EdGraph Analytics Contributors"
-    - Add members/users to Security Group
-- If deploying to EdGraph's Azure Tenant/Subscription
-  - If Development Subscription, use Security Group named "BI Developers (Dev)"
-  - If Production Subscription, use Security Group named "BI Developers (Prod)"
-- Go to the Resource Group - Access Control (IAM)
-  - Add "Contributor" permissions to the Azure AD Security Group
+#### If deploying to a customer's Azure Tenant/Subscription
+- Create Security Group(s) in Microsoft Entra ID
+  - "EdGraph Analytics - BI Developers"
+    - Invite/Add rohan@edwire.com, arjun@edwire.com, mega@edwire.com
+  - "EdGraph Analytics - Support Team"
+    - Invite/Add sherod@edwire.com, daniel@edwire.com, taylor@edwire.com, jason@edwire.com, allison@edwire.com
+  - "EdGraph Analytics - Report Authors"
+    - Invite/Add Power BI Report Authors
+
+- Go to the OEA Resource Group - Access Control (IAM)
+  - Add "Owner" Eligible permissions to the following Azure AD Security Group(s):
+    - "DevOps Engineers (Dev)" or "DevOps Engineers (Prod)"
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+  - Add "Reader" permissions to the following Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+    - "EdGraph Analytics - Support Team"
+    - "EdGraph Analytics - Report Authors"
+      
 - Go to the Storage Account - Access Control (IAM)
-  - Add "Storage Blob Data Contributor" permissions to the Azure AD Security Group
-- Go to the Key Vault - Access Policies
-  - Select "Secret Management" template
-  - Add "permissions to the Azure AD Security Group
+  - Add "Storage Blob Data Contributor" permissions to the following Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+    - "EdGraph Analytics - Support Team"
+    - "EdGraph Analytics - Report Authors"
+    - "[Instance Service Principal]"
+      
+- Go to the Key Vault - Access Control (IAM)
+  - Add "Key Vault Secret Officers" permissions to the following Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+  - Add "Key Vault Secret User" permissions to the following Azure AD Security Group(s):
+    - "[Instance Service Principal]"
+
 - Go to the Synapse Workspace - Manage - Access Control
-  - Add "Synapse Administrator" permissions to the Azure AD Security Group
+  - Add "Synapse Administrator" permissions to the Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+    - "[Instance Service Principal]"
+
+#### If deploying to EdGraph's Azure Tenant/Subscription
+- Create Security Group(s) in Microsoft Entra ID
+  - "[Subscription Name] - Support Team"
+    - Invite/Add sherod@edwire.com, daniel@edwire.com, taylor@edwire.com, jason@edwire.com, allison@edwire.com
+  - "[Subscription Name] - Report Authors"
+    - Invite/Add Power BI Report Authors
+
+- Go to the Subscription - Access Control (IAM)
+  - Add "Owner" Eligible permissions to the following Azure AD Security Group(s):
+    - "DevOps Engineers (Dev)" or "DevOps Engineers (Prod)"
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+  - Add "Reader" permissions to the following Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+    - "[Subscription Name] - Support Team"
+    - "[Subscription Name] - Report Authors"
+      
+- Go to the Storage Account - Access Control (IAM)
+  - Add "Storage Blob Data Contributor" permissions to the following Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+    - "[Subscription Name] - Support Team"
+    - "[Subscription Name] - Report Authors"
+    - "[Instance Service Principal]"
+      
+- Go to the Key Vault - Access Control (IAM)
+  - Add "Key Vault Secret Officers" permissions to the following Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+  - Add "Key Vault Secret User" permissions to the following Azure AD Security Group(s):
+    - "[Instance Service Principal]"
+
+- Go to the Synapse Workspace - Manage - Access Control
+  - Add "Synapse Administrator" permissions to the Azure AD Security Group(s):
+    - "BI Developers (Dev)" or "BI Developers (Prod)"
+    - "[Instance Service Principal]"
 
 ### If the setup script fails
 
