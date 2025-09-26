@@ -1,4 +1,4 @@
- <#Author       : Joseph Karns
+<#Author       : Joseph Karns
 # Usage        : Install Packages with Chocolatey
 #>
 
@@ -10,41 +10,39 @@
 [CmdletBinding()]
   Param (
         [Parameter(Mandatory)]
-        [string]$packageArray
+        [System.String[]]$PackageList
 )
 
 function InstallPackagesWithChoco($packageArray) {
 
-    Begin {
+    BEGIN {
         $stopwatch = [System.Diagnostics.Stopwatch]::StartNew()
         Write-host "Starting AVD Customization: Install Packages with Chocolatey : $((Get-Date).ToUniversalTime()) "
     }
 
-    Process {
-        foreach ($item in $MyStringArray) {
+    PROCESS {
+        foreach ($Package in $PackageList) {
             try {
-                Write-host "AVD Customization: Install Packages with Chocolatey - Installing $item"
+                Write-host "AVD Customization: Install Packages with Chocolatey - Installing $Package"
 
-                Start-Process choco -ArgumentList "install $item" -PassThru -Wait
+                Start-Process choco -ArgumentList "install $Package" -PassThru -Wait
 
                 Write-host "AVD Customization: Install Chocolatey - Finished installation of Chocolatey"
-                $provisionedPackages = Get-AppxProvisionedPackage -Online
-                $isPackageInstalled = $provisionedPackages | Where-Object { $_.PackageName -like '*$item*' }
 
-                if ($isPackageInstalled) {
-                    Write-Host "AVD Customization: Install Packages with Chocolatey - Get-AppxProvisionedPackage returned $item."
+                if (choco list --lo -r -e $Package) {
+                    Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is installed."
+
                 } else {
-                    Write-Host "AVD Customization: Install Packages with Chocolatey - Get-AppxProvisionedPackage did not return $item."
+                    Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is not installed."
                 }
             }
             catch {
-                Write-Host "*** AVD CUSTOMIZER PHASE ***  Install Packages with Chocolatey  - Exception occured installing $item  *** : [$($_.Exception.Message)]"
+                Write-Host "*** AVD CUSTOMIZER PHASE ***  Install Packages with Chocolatey  - Exception occured installing $Package  *** : [$($_.Exception.Message)]"
             }
         }
     }
 
-
-    End {
+    END {
 
         #Cleanup
         if ((Test-Path -Path $templateFilePathFolder -ErrorAction SilentlyContinue)) {
@@ -63,4 +61,8 @@ function InstallPackagesWithChoco($packageArray) {
 
 }
 
-InstallPackagesWithChoco -packageArray $packageArray
+InstallPackagesWithChoco -PackageList $PackageList
+
+#############
+#    END    #
+#############
