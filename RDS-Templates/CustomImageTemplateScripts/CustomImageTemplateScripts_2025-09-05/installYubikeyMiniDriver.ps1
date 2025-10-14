@@ -41,7 +41,7 @@ function InstallYubikeyDriverforAVD($YubikeyDriverDownloadLink, $YubikeyDriverVe
             $appVersion = $YubikeyDriverVersion
             New-Item -Path $tempFolder -Name $appName  -ItemType Directory -ErrorAction SilentlyContinue
             $LocalPath = $tempFolder + '\' + $appName
-            $YubikeyExe = 'YubiKey-Minidriver-' + $appVersion + '-x64.msi'   YubiKey-Minidriver-5.0.1.272-x64.msi
+            $YubikeyExe = 'YubiKey-Minidriver-' + $appVersion + '-x64.msi'
             $outputPath = $LocalPath + '\' + $YubikeyExe
 
             Invoke-WebRequest -Uri $YubikeyDriverDownloadLink -OutFile $outputPath
