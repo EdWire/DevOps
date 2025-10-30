@@ -24,16 +24,33 @@ function InstallPackagesWithChoco($packageArray) {
         foreach ($Package in $PackageList) {
             try {
                 Write-host "AVD Customization: Install Packages with Chocolatey - Installing $Package"
+                $maxAttempts = 5
+                $attempt = 0
+                $success = $false
 
-                Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes" -PassThru -Wait
+                while (-not $success -and $attempt -lt $maxAttempts) {
+                    $attempt++
+                    Write-Host "Attempting to Install $Package with Chocolatey (Attempt $attempt of $maxAttempts)..."
 
-                Write-host "AVD Customization: Install Chocolatey - Finished installation of Chocolatey"
-
-                if (choco list --lo -r -e $Package) {
-                    Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is installed."
-
-                } else {
-                    Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is not installed."
+                    try {
+                        $Exit = Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes --use-package-exit-codes" -PassThru -Wait
+                        
+                        if (choco list --lo -r -e $Package) {
+                            Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is installed."
+                            $success = $true
+                        } else {
+                            throw "AVD Customization: Install Packages with Chocolatey - $Package is not installed. Exit Code: $Exit"
+                        }
+                    }
+                    catch {
+                        Write-Host "Error: $($_.Exception.Message)"
+                        if ($attempt -lt $maxAttempts) {
+                            Write-Host "Retrying in 10 seconds..."
+                            Start-Sleep -Seconds 10
+                        } else {
+                            Write-Host "Maximum attempts reached. Operation failed."
+                        }
+                    }
                 }
             }
             catch {
