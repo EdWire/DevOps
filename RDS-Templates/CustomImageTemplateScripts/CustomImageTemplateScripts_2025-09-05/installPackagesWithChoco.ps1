@@ -45,14 +45,6 @@ function InstallPackagesWithChoco($packageArray) {
     END {
 
         #Cleanup
-        if ((Test-Path -Path $templateFilePathFolder -ErrorAction SilentlyContinue)) {
-            Remove-Item -Path $templateFilePathFolder -Force -Recurse -ErrorAction Continue
-        }
-
-        if ((Test-Path -Path $tempFolder -ErrorAction SilentlyContinue)) {
-            Remove-Item -Path $tempFolder -Force -Recurse -ErrorAction Continue
-        }
-
         $stopwatch.Stop()
         $elapsedTime = $stopwatch.Elapsed
         Write-Host "*** AVD CUSTOMIZER PHASE : Install Packages with Chocolatey -  Exit Code: $LASTEXITCODE ***"    
