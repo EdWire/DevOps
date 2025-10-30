@@ -83,6 +83,7 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
                 Write-host "AVD Customization: Install OLE DB Driver - Finished Installation of OLE DB Driver Version $Version"
 
                 $isoledbdInstalled = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft","HKLM:\SOFTWARE\Wow6432Node\Microsoft" | Where-Object { $_.Name -like "*MSOLEDBSQL*" } | ForEach-Object { Get-ItemPropertyValue -LiteralPath $_.Name.Replace("HKEY_LOCAL_MACHINE", "HKLM:") -Name $_.Property }
+                $isoledbdInstalledVersions = @()
                 foreach ($version in $isoledbdInstalled) {
                     $isoledbdInstalledVersions += $version.Substring(0, $version.Length - 2)
                 }
