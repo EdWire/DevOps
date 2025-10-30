@@ -82,7 +82,7 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
 
                 Write-host "AVD Customization: Install OLE DB Driver - Finished Installation of OLE DB Driver Version $Version"
 
-                $isoledbdInstalled = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft", "HKLM:\SOFTWARE\Wow6432Node\Microsoft" | Where-Object { $_.Name -like "*MSOLEDBSQL*" } | ForEach-Object { Get-ItemProperty $_.InstalledVersion }
+                $isoledbdInstalled = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSOLEDBSQL" | Select-Object -ExpandProperty "InstalledVersion"
                 $isoledbdInstalledVersion = $isoledbdInstalled.Substring(0, $isoledbdInstalled.Length - 2)
                 
                 if ($isoledbdInstalledVersion -eq $Version) {
@@ -102,10 +102,6 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
         #Cleanup
         if ((Test-Path -Path $templateFilePathFolder -ErrorAction SilentlyContinue)) {
             Remove-Item -Path $templateFilePathFolder -Force -Recurse -ErrorAction Continue
-        }
-
-        if ((Test-Path -Path $tempFolder -ErrorAction SilentlyContinue)) {
-            Remove-Item -Path $tempFolder -Force -Recurse -ErrorAction Continue
         }
 
         $stopwatch.Stop()

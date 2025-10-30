@@ -109,10 +109,6 @@ function InstallODBCDriverforAVD($ODBCDriverVersionsList) {
             Remove-Item -Path $templateFilePathFolder -Force -Recurse -ErrorAction Continue
         }
 
-        if ((Test-Path -Path $tempFolder -ErrorAction SilentlyContinue)) {
-            Remove-Item -Path $tempFolder -Force -Recurse -ErrorAction Continue
-        }
-
         $stopwatch.Stop()
         $elapsedTime = $stopwatch.Elapsed
         Write-Host "*** AVD CUSTOMIZER PHASE : Install ODBC Driver -  Exit Code: $LASTEXITCODE ***"    
