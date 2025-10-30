@@ -88,7 +88,7 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
                     $isoledbdInstalledVersions += $version.Substring(0, $version.Length - 2)
                 }
                 
-                if ($isoledbdInstalledVersions -contains $Version) {
+                if ($isoledbdInstalledVersions -contains "$Version") {
                     Write-Host "AVD Customization: Install OLE DB Driver - Windows Registry returned the correct OLE DB Driver version."
                 } else {
                     Write-Host "AVD Customization: Install OLE DB Driver - Windows Registry did not return the correct OLE DB Driver version."
