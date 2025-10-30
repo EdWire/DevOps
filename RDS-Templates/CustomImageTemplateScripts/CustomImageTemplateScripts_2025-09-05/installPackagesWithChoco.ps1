@@ -25,7 +25,7 @@ function InstallPackagesWithChoco($packageArray) {
             try {
                 Write-host "AVD Customization: Install Packages with Chocolatey - Installing $Package"
 
-                Start-Process choco -ArgumentList "install $Package" -PassThru -Wait
+                Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes" -PassThru -Wait
 
                 Write-host "AVD Customization: Install Chocolatey - Finished installation of Chocolatey"
 
