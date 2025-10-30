@@ -38,6 +38,8 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
                 $appName = 'oledb'
                 $appVersion = $Version
                 New-Item -Path $tempFolder -Name $appName  -ItemType Directory -ErrorAction SilentlyContinue
+                $PartialPath = $tempFolder + '\' + $appName
+                New-Item -Path $PartialPath -Name $appVersion  -ItemType Directory -ErrorAction SilentlyContinue
                 $LocalPath = $tempFolder + '\' + $appName + '\' + $appVersion
                 $msoledbsqlMsi = 'msoledbsql.msi'
                 $outputPath = $LocalPath + '\' + $msoledbsqlMsi

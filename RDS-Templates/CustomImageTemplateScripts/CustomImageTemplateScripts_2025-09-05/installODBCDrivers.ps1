@@ -38,6 +38,8 @@ function InstallODBCDriverforAVD($ODBCDriverVersionsList) {
                 $appName = 'odbc'
                 $appVersion = $Version
                 New-Item -Path $tempFolder -Name $appName  -ItemType Directory -ErrorAction SilentlyContinue
+                $PartialPath = $tempFolder + '\' + $appName
+                New-Item -Path $PartialPath -Name $appVersion  -ItemType Directory -ErrorAction SilentlyContinue
                 $LocalPath = $tempFolder + '\' + $appName + '\' + $appVersion
                 $msodbcsqlMsi = 'msodbcsql.msi'
                 $outputPath = $LocalPath + '\' + $msodbcsqlMsi
