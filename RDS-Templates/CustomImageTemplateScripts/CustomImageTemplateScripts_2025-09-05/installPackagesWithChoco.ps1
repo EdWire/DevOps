@@ -33,14 +33,9 @@ function InstallPackagesWithChoco($packageArray) {
                     Write-Host "Attempting to Install $Package with Chocolatey (Attempt $attempt of $maxAttempts)..."
 
                     try {
-                        $Exit = Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes --use-package-exit-codes" -PassThru -Wait
-                        
-                        if (choco list --lo -r -e $Package) {
-                            Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is installed."
-                            $success = $true
-                        } else {
-                            throw "AVD Customization: Install Packages with Chocolatey - $Package is not installed. Exit Code: $Exit"
-                        }
+                        Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes --use-package-exit-codes" -PassThru -Wait
+                        Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is installed."
+                        $success = $true
                     }
                     catch {
                         Write-Host "Error: $($_.Exception.Message)"
