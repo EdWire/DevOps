@@ -87,9 +87,9 @@ function InstallODBCDriverforAVD($ODBCDriverVersionsList) {
 
                 Write-host "AVD Customization: Install ODBC Driver - Finished Installation of ODBC Driver Version $Version"
 
-                $isoledbdInstalled = Get-ChildItem -Path "HKLM:\SOFTWARE\ODBC", "HKLM:\SOFTWARE\Wow6432Node\ODBC" | Where-Object { $_.Name -like "*ODBC.INI*" }
+                $isodbcInstalled = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft", "HKLM:\SOFTWARE\Wow6432Node\Microsoft" | Where-Object { $_.Name -like "*ODBC Driver*" } | ForEach-Object { Get-ChildItem -Path $_.Name.Replace("HKEY_LOCAL_MACHINE", "HKLM:") | Where-Object { $_.Name -like "*CurrentVersion*" }} | ForEach-Object {Get-ItemPropertyValue -LiteralPath $_.Name.Replace("HKEY_LOCAL_MACHINE", "HKLM:") -Name Version}
                 
-                if ($isoledbdInstalled) {
+                if ($isodbcInstalled -contains $Version.ToString()) {
                     Write-Host "AVD Customization: Install ODBC Driver - Windows Registry returned the ODBC Driver."
                 }
                 else {
