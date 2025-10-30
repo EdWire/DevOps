@@ -52,7 +52,7 @@ function InstallYubikeyDriverforAVD($YubikeyDriverDownloadLink, $YubikeyDriverVe
             New-ItemProperty -Path "HKLM:\Software\Yubico\ykmd" -Name "NewKeyTouchPolicy" -Value 3 -force
 
             Write-host "AVD Customization: Install Yubikey Driver - Finished installation of Yubikey Driver"
-            $isYubiInstalled = Get-WindowsDriver -Online | Where-Object {($_.ProviderName -like "Yubico") -and ($_.ClassName -like "SmartCard") -and ($_.Version -like "*")} | Select-Object Version
+            $isYubiInstalled = Get-WindowsDriver -Online | Where-Object {($_.ProviderName -like "Yubico") -and ($_.ClassName -like "SmartCard") -and ($_.Version -like "*")} | Select-Object -ExpandProperty "Version"
 
             if ($isYubiInstalled == $appVersion) {
                 Write-Host "AVD Customization: Install Yubikey Driver - Get-WindowsDriver returned the correct Yubikey Driver version."
