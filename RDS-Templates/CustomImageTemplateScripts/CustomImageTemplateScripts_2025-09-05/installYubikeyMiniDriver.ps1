@@ -54,7 +54,7 @@ function InstallYubikeyDriverforAVD($YubikeyDriverDownloadLink, $YubikeyDriverVe
             Write-host "AVD Customization: Install Yubikey Driver - Finished installation of Yubikey Driver"
             $isYubiInstalled = Get-WindowsDriver -Online | Where-Object {($_.ProviderName -like "Yubico") -and ($_.ClassName -like "SmartCard") -and ($_.Version -like "*")} | Select-Object -ExpandProperty "Version"
 
-            if ($isYubiInstalled == $appVersion) {
+            if ($isYubiInstalled -eq $appVersion) {
                 Write-Host "AVD Customization: Install Yubikey Driver - Get-WindowsDriver returned the correct Yubikey Driver version."
             } else {
                 Write-Host "AVD Customization: Install Yubikey Driver - Get-WindowsDriver did not return the correct Yubikey Driver version."
