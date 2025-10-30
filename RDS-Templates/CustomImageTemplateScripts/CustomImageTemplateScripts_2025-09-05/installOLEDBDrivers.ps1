@@ -43,7 +43,7 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
                 $LocalPath = $tempFolder + '\' + $appName + '\' + $appVersion
                 $msoledbsqlMsi = 'msoledbsql.msi'
                 $outputPath = $LocalPath + '\' + $msoledbsqlMsi
-
+		
                 switch ($Version) {
                     19.4.1 { $OLEDBDriverDownloadLink = "https://go.microsoft.com/fwlink/?linkid=2318101" }
                     19.3.7 { $OLEDBDriverDownloadLink = "https://go.microsoft.com/fwlink/?linkid=2335761" }
@@ -83,9 +83,10 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
                 Write-host "AVD Customization: Install OLE DB Driver - Finished Installation of OLE DB Driver Version $Version"
 
                 $isoledbdInstalled = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft","HKLM:\SOFTWARE\Wow6432Node\Microsoft" | Where-Object { $_.Name -like "*MSOLEDBSQL*" } | ForEach-Object { Get-ItemPropertyValue -LiteralPath $_.Name.Replace("HKEY_LOCAL_MACHINE", "HKLM:") -Name $_.Property }
+
                 $isoledbdInstalledVersions = @()
-                foreach ($version in $isoledbdInstalled) {
-                    $isoledbdInstalledVersions += $version.Substring(0, $version.Length - 2)
+                foreach ($isoledbdversion in $isoledbdInstalled) {
+                    $isoledbdInstalledVersions += $isoledbdversion.Substring(0, $isoledbdversion.Length - 2)
                 }
                 
                 if ($isoledbdInstalledVersions -contains $Version.ToString()) {
