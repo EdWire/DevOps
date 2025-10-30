@@ -82,10 +82,12 @@ function InstallOLEDBDriverforAVD($OLEDBDriverVersionsList) {
 
                 Write-host "AVD Customization: Install OLE DB Driver - Finished Installation of OLE DB Driver Version $Version"
 
-                $isoledbdInstalled = Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\MSOLEDBSQL" | Select-Object -ExpandProperty "InstalledVersion"
-                $isoledbdInstalledVersion = $isoledbdInstalled.Substring(0, $isoledbdInstalled.Length - 2)
+                $isoledbdInstalled = Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft","HKLM:\SOFTWARE\Wow6432Node\Microsoft" | Where-Object { $_.Name -like "*MSOLEDBSQL*" } | ForEach-Object { Get-ItemPropertyValue -LiteralPath $_.Name.Replace("HKEY_LOCAL_MACHINE", "HKLM:") -Name $_.Property }
+                foreach ($version in $isoledbdInstalled) {
+                    $isoledbdInstalledVersions += $version.Substring(0, $version.Length - 2)
+                }
                 
-                if ($isoledbdInstalledVersion -eq $Version) {
+                if ($isoledbdInstalledVersions -contains $Version) {
                     Write-Host "AVD Customization: Install OLE DB Driver - Windows Registry returned the correct OLE DB Driver version."
                 } else {
                     Write-Host "AVD Customization: Install OLE DB Driver - Windows Registry did not return the correct OLE DB Driver version."
