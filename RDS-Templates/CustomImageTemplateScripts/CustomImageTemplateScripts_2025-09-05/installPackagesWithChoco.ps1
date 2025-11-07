@@ -30,7 +30,7 @@ function InstallPackagesWithChoco($packageArray) {
                 Write-Host "*** AVD CUSTOMIZER PHASE : Install Packages with Chocolatey  - Exception occured installing $Package  *** : [$($_.Exception.Message)]"
             }
             finally {
-                Start-Process choco list --lo -r -e $Package -Wait -PassThru
+                Start-Process choco -ArgumentList "list --lo -r -e $Package" -Wait -PassThru
                 Write-Host "AVD Customization: Install Packages with Chocolatey - $Package is installed."
             }
         }
