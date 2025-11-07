@@ -24,7 +24,7 @@ function InstallPackagesWithChoco($packageArray) {
         foreach ($Package in $PackageList) {
             try {
                 Write-host "AVD Customization: Install Packages with Chocolatey - Installing $Package"
-                Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes --use-package-exit-codes --ignore-checksums --debug --verbose --install-args '/allusers'" -ErrorAction Stop -Wait
+                Start-Process choco -ArgumentList "install $Package --ignoredetectedreboot --yes --use-package-exit-codes --ignore-checksums --debug --verbose" -ErrorAction Stop -Wait -PassThru
             }
             catch {
                 Write-Host "*** AVD CUSTOMIZER PHASE : Install Packages with Chocolatey  - Exception occured installing $Package  *** : [$($_.Exception.Message)]"
